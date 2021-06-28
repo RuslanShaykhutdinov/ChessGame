@@ -48,6 +48,7 @@ public class Table {
 
     private final Color lightTileColor = Color.decode("#F2EEEE");
     private final Color darkTileColor = Color.decode("#928989");
+
     public Table(){
         this.gameFrame = new JFrame("JavaChess");
         this.gameFrame.setLayout(new BorderLayout());
@@ -76,14 +77,6 @@ public class Table {
 
     private JMenu createFileMenu() {
         final JMenu fileMenu = new JMenu("File");
-        final JMenuItem openPGN = new JMenuItem("Load PGN File");
-        openPGN.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("open up that pgn file!");
-            }
-        });
-        fileMenu.add(openPGN);
         final  JMenuItem exitMenuItem = new JMenuItem("Exit");
         exitMenuItem.addActionListener(new ActionListener() {
             @Override
@@ -94,6 +87,7 @@ public class Table {
         fileMenu.add(exitMenuItem);
         return fileMenu;
     }
+
     private JMenu createPreferencesMenu(){
         final JMenu preferencesMenu = new JMenu("Preferences");
         final JMenuItem flipBoardMenuItem = new JMenuItem("Flip Board");
@@ -116,6 +110,7 @@ public class Table {
         preferencesMenu.add(legalMoveHighlighterCheckBox);
         return preferencesMenu;
     }
+
     public  enum BoardDirection{
         NORMAL{
             @Override
@@ -134,12 +129,14 @@ public class Table {
             }
             @Override
             BoardDirection opposite(){
-                return NORMAL;
+                 return NORMAL;
             }
         };
+
         abstract List<TilePanel> traverse(final  List<TilePanel> boardTiles);
         abstract BoardDirection opposite();
     }
+
     private class  BoardPanel extends JPanel{
         final List<TilePanel> boardTiles;
         BoardPanel(){
@@ -153,6 +150,7 @@ public class Table {
             setPreferredSize(BOARD_PANEL_DIMENSION);
             validate();
         }
+
         public void drawBoard(final Board board){
             removeAll();
             for (final TilePanel tilePanel:
@@ -164,6 +162,7 @@ public class Table {
             repaint();
         }
     }
+
     public static class MoveLog{
         private final List<Move> moves;
         MoveLog(){
@@ -178,16 +177,8 @@ public class Table {
         public int size(){
             return  this.moves.size();
         }
-        public void clear(){
-            this.moves.clear();
-        }
-        public Move removeMove(int index){
-            return this.moves.remove(index);
-        }
-        public boolean removeMove(final  Move move){
-            return  this.moves.remove(move);
-        }
     }
+
     private class  TilePanel extends  JPanel{
         private final int tileId;
         TilePanel(final BoardPanel boardPanel,final  int tileId){
@@ -256,6 +247,7 @@ public class Table {
             });
             validate();
         }
+
         public void drawTile(final Board board){
             assignTileColor();
             assignTilePieceIcon(board);
@@ -277,6 +269,7 @@ public class Table {
                 }
             }
         }
+
         private  void  highlightLegals(final Board board){
             if(highlightLegalMoves){
                 for (final Move move: pieceLegalMoves(board)) {
@@ -290,6 +283,7 @@ public class Table {
                 }
             }
         }
+
         private Collection<Move> pieceLegalMoves(final Board board) {
             if(humanMovedPiece != null && humanMovedPiece.getPieceAlliance() == board.currentPlayer().getAlliance()){
                 return humanMovedPiece.calculateLegalMoves(board);

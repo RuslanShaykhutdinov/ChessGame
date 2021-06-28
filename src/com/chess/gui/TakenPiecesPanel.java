@@ -19,7 +19,7 @@ public class TakenPiecesPanel extends JPanel {
     private final JPanel southPanel;
 
     private static final Color PANEL_COLOR = Color.decode("0xFDF5E6");
-    private static final Dimension TAKEN_PIECES_DIMENSION = new Dimension(40,80);
+    private static final Dimension TAKEN_PIECES_DIMENSION = new Dimension(100,80);
     private static  final EtchedBorder PANEL_BORDER = new EtchedBorder(EtchedBorder.RAISED);
     public TakenPiecesPanel(){
         super(new BorderLayout());
@@ -29,13 +29,14 @@ public class TakenPiecesPanel extends JPanel {
         this.southPanel = new JPanel(new GridLayout(8,2));
         this.northPanel.setBackground(PANEL_COLOR);
         this.southPanel.setBackground(PANEL_COLOR);
-        this.add(this.northPanel,BorderLayout.NORTH);
-        this.add(this.southPanel,BorderLayout.SOUTH);
+        add(this.northPanel,BorderLayout.WEST);
+        add(this.southPanel,BorderLayout.EAST);
         setPreferredSize(TAKEN_PIECES_DIMENSION);
     }
     public void redo(final Table.MoveLog moveLog ){
         this.southPanel.removeAll();
         this.northPanel.removeAll();
+
         final List<Piece> whiteTakenPieces = new ArrayList<>();
         final List<Piece> blackTakenPieces = new ArrayList<>();
 
@@ -46,8 +47,8 @@ public class TakenPiecesPanel extends JPanel {
                     whiteTakenPieces.add(takenPiece);
                 } else if (takenPiece.getPieceAlliance().isBlack()){
                     blackTakenPieces.add(takenPiece);
-                }else {
-                    throw new RuntimeException("should not reach here!");
+                } else {
+                    throw new RuntimeException("Should not reach here!");
                 }
             }
         }
@@ -66,9 +67,10 @@ public class TakenPiecesPanel extends JPanel {
         for (final  Piece takenPiece:whiteTakenPieces) {
             try{
                 final BufferedImage image = ImageIO.read(new File("simple/"
-                        + takenPiece.getPieceAlliance().toString().substring(0,1) + "" + takenPiece.toString()));
+                        + takenPiece.getPieceAlliance().toString().substring(0,1) + "" + takenPiece.toString() + ".gif"));
                 final ImageIcon icon = new ImageIcon(image);
-                final  JLabel imageLabel = new JLabel();
+                final  JLabel imageLabel = new JLabel(new ImageIcon(icon.getImage().getScaledInstance(
+                        icon.getIconWidth() - 15, icon.getIconWidth() - 15, Image.SCALE_SMOOTH)));
                 this.southPanel.add(imageLabel);
 
             }catch (final IOException e){
@@ -78,10 +80,11 @@ public class TakenPiecesPanel extends JPanel {
         for (final  Piece takenPiece:blackTakenPieces) {
             try{
                 final BufferedImage image = ImageIO.read(new File("simple/"
-                        + takenPiece.getPieceAlliance().toString().substring(0,1) + "" + takenPiece.toString()));
+                        + takenPiece.getPieceAlliance().toString().substring(0,1) + "" + takenPiece.toString() + ".gif"));
                 final ImageIcon icon = new ImageIcon(image);
-                final  JLabel imageLabel = new JLabel();
-                this.southPanel.add(imageLabel);
+                final  JLabel imageLabel = new JLabel(new ImageIcon(icon.getImage().getScaledInstance(
+                        icon.getIconWidth() - 15, icon.getIconWidth() - 15, Image.SCALE_SMOOTH)));
+                this.northPanel.add(imageLabel);
 
             }catch (final IOException e){
                 e.printStackTrace();

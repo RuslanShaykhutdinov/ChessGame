@@ -13,6 +13,7 @@ public class GameHistoryPanel extends JPanel {
     private final DataModel model;
     private final JScrollPane scrollPane;
     private  static  final Dimension HISTORY_PANEL_DIMENSION = new Dimension(100,400);
+
     GameHistoryPanel(){
         this.setLayout(new BorderLayout());
         this.model = new DataModel();
@@ -24,7 +25,9 @@ public class GameHistoryPanel extends JPanel {
         this.add(scrollPane,BorderLayout.CENTER);
         this.setVisible(true);
     }
+
     void redo(final Board board, final Table.MoveLog moveHistory){
+
         int currentRow = 0;
         this.model.clear();
         for (final Move move: moveHistory.getMoves()) {
@@ -60,8 +63,10 @@ public class GameHistoryPanel extends JPanel {
     }
 
     private static  class DataModel extends DefaultTableModel{
+
         private final List<Row> values;
         private static final String[] NAMES = {"White","Black"};
+
         DataModel(){
             this.values = new ArrayList<>();
         }
@@ -71,7 +76,9 @@ public class GameHistoryPanel extends JPanel {
         }
         @Override
         public int getRowCount(){
-            if(this.values == null){return 0;}
+            if(this.values == null){
+                return 0;
+            }
             return this.values.size();
         }
         @Override
@@ -116,6 +123,7 @@ public class GameHistoryPanel extends JPanel {
             return NAMES[column];
         }
     }
+
     private static  class  Row{
         private String whiteMove;
         private String blackMove;

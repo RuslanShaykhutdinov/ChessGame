@@ -28,12 +28,15 @@ public abstract class Player {
         this.legalMoves = ImmutableList.copyOf(Iterables.concat(legalMoves,calculateKingCastles(legalMoves,opponentMoves)));
         this.isInCheck = !Player.calculateAttacksOnTile(this.playerKing.getPiecePosition(),opponentMoves).isEmpty();
     }
+
     public King getPlayerKing(){
         return this.playerKing;
     }
+
     public Collection<Move> getLegalMoves(){
         return this.legalMoves;
     }
+
     protected static Collection<Move> calculateAttacksOnTile(int piecePosition, Collection<Move> moves) {
         final List<Move> attackMoves = new ArrayList<>();
         for (final Move move: moves) {
@@ -55,9 +58,18 @@ public abstract class Player {
     private boolean isMoveLegal(final Move move){
         return  this.legalMoves.contains(move);
     }
-    public boolean isInCheck(){return this.isInCheck;}
-    public boolean isInCheckMate(){return this.isInCheck && !hasEscapeMoves();}
-    public boolean isInStaleMate(){return !this.isInCheck && !hasEscapeMoves();}
+
+    public boolean isInCheck(){
+        return this.isInCheck;
+    }
+
+    public boolean isInCheckMate(){
+        return this.isInCheck && !hasEscapeMoves();
+    }
+
+    public boolean isInStaleMate(){
+        return !this.isInCheck && !hasEscapeMoves();
+    }
 
     protected boolean hasEscapeMoves(){
         for (final Move move: this.legalMoves) {
@@ -68,7 +80,11 @@ public abstract class Player {
         }
         return false;
     }
-    public boolean isCastled(){return false;}
+
+    public boolean isCastled(){
+        return false;
+    }
+
     public MoveTransition makeMove(final Move move){
         if(!isMoveLegal(move)){
             return new MoveTransition(this.board,move,MoveStatus.ILLEGAL_MOVE);

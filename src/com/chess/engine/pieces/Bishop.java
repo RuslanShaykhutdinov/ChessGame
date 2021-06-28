@@ -11,7 +11,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static com.chess.engine.board.Move.*;
+
 public class Bishop extends Piece{
+
     private final static int[] Candidate_Move_Vector_Coordinate = {-9,-7,7,9};
     public Bishop(final Alliance pieceAlliance, final int piecePosition) {
         super(PieceType.BISHOP,piecePosition, pieceAlliance,true);
@@ -34,13 +37,13 @@ public class Bishop extends Piece{
                 if(BoardUtils.isValidTileCoordinate(candidateDestinationCoordinate)){
                     final Tile candidateDestinationTile = board.getTile(candidateDestinationCoordinate);
                     if(!candidateDestinationTile.isTileOccupied()){
-                        legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
+                        legalMoves.add(new MajorMove(board, this, candidateDestinationCoordinate));
                     }
                     else{
                         final Piece pieceAtDestination = candidateDestinationTile.getPiece();
                         final Alliance pieceAlliance = pieceAtDestination.getPieceAlliance();
                         if (this.pieceAlliance != pieceAlliance){
-                            legalMoves.add(new Move.AttackMove(board,this,
+                            legalMoves.add(new MajorAttackMove(board,this,
                                     candidateDestinationCoordinate, pieceAtDestination));
                         }
                         break;

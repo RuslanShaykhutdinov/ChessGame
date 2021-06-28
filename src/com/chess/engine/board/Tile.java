@@ -11,7 +11,6 @@ import static com.chess.engine.board.BoardUtils.num_Tiles;
 public abstract class Tile {
 
     protected final int tileCoordinate;
-
     private static final Map<Integer,EmptyTile> EMPTY_TILES_CACHE = createAllPossibleEmptyTiles();
 
     private static Map<Integer,EmptyTile> createAllPossibleEmptyTiles() {
@@ -31,7 +30,9 @@ public abstract class Tile {
     }
     public abstract boolean isTileOccupied();
     public abstract Piece getPiece();
-    public int getTileCoordinate(){return this.tileCoordinate;}
+    public int getTileCoordinate(){
+        return this.tileCoordinate;
+    }
 
     public static final class EmptyTile extends Tile{
         private EmptyTile(final int coordinate){
@@ -50,6 +51,7 @@ public abstract class Tile {
             return null;
         }
     }
+
     public static final class OccupiedTile extends Tile{
         private final Piece pieceOnTile;
         private OccupiedTile(int tileCoordinate,final Piece pieceOnTile){

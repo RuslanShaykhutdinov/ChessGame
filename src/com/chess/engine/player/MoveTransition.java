@@ -11,7 +11,7 @@ public class MoveTransition {
     public MoveTransition(final  Board transitionBoard,
                           final  Move move,
                           final MoveStatus moveStatus){
-        this.transitionBoard =transitionBoard;
+        this.transitionBoard = transitionBoard;
         this.move = move;
         this.moveStatus = moveStatus;
     }
